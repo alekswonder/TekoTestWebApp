@@ -2,12 +2,12 @@
 {
     public enum Position
     {
-        JuniorBackendDeveloper,
-        MiddleBackendDeveloper,
-        SeniorBackendDeveloper,
-        JuniorFrontendDeveloper,
-        MiddleFrontednDeveloper,
-        SeniorFrontendDeveloper,
+        JuniorBackend,
+        MiddleBackend,
+        SeniorBackend,
+        JuniorFrontend,
+        MiddleFrontedn,
+        SeniorFrontend,
         JuniorQA,
         MiddleQA,
         SeniorQA,

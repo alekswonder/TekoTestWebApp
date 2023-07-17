@@ -8,10 +8,10 @@ namespace TekoTestWebApp.Models
     {
         [Key]
         public int Id { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        [ForeignKey("Employee")]
-        public int EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        public DateTime StartDateTime { get; set; }
+        public DateTime EndDateTime { get; set; }
+        [ForeignKey("User")]
+        public string? UserId { get; set; }
+        public User? User { get; set; }
     }
 }

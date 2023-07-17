@@ -1,13 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TekoTestWebApp.Models;
 
 namespace TekoTestWebApp.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<User>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<Employee> Clubs { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<Vacation> Vacations { get; set; }
     }
 }

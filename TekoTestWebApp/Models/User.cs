@@ -1,18 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using TekoTestWebApp.Data.Enum;
 
 namespace TekoTestWebApp.Models
 {
-    public class Employee
+    public class User : IdentityUser
     {
-        [Key]
-        public int Id { get; set; }
         public string FullName { get; set; }
         public Position Position { get; set; }
-        [ForeignKey("Department")]
-        public int DeparmentId { get; set; }
         public Department Department { get; set; }
         public int Age { get; set; }
+        public DateTime? RegistrationTime { get; set; }
     }
 }
