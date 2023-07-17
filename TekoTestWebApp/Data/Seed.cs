@@ -1,4 +1,5 @@
-﻿using TekoTestWebApp.Data.Enum;
+﻿using Microsoft.AspNetCore.Identity;
+using TekoTestWebApp.Data.Enum;
 using TekoTestWebApp.Models;
 
 namespace TekoTestWebApp.Data
@@ -11,23 +12,44 @@ namespace TekoTestWebApp.Data
             {
                 var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
                 context.Database.EnsureCreated();
-                if (!context.Users.Any())
+            }
+        }
+
+        public static async Task SeedUsersAndRolesAsync(IApplicationBuilder appBuilder)
+        {
+            using (var serviceScope = appBuilder.ApplicationServices.CreateScope())
+            {
+                // Roles
+                var roleManager = serviceScope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                if (!await roleManager.RoleExistsAsync(UserRoles.Admin))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
+                if (!await roleManager.RoleExistsAsync(UserRoles.User))
+                    await roleManager.CreateAsync(new IdentityRole(UserRoles.User));
+
+                // Users
+                var userManager = serviceScope.ServiceProvider.GetRequiredService<UserManager<User>>();
+                string adminUserEmail = "adminUserEmail@somedomain.com";
+                var adminUser = await userManager.FindByEmailAsync(adminUserEmail);
+                if (adminUser == null)
                 {
-                    Random random = new Random();
-                    Type typeOfPosition = typeof(Position);
-                    Type typeOfDepartment = typeof(Department);
-                    Array positions = typeOfPosition.GetEnumValues();
-                    Array departments = typeOfDepartment.GetEnumValues() ;
-                    for (int i = 1; i < 101; i++)
+                    var newAdminUser = new User()
                     {
-                        new User()
-                        {
-                            FullName = string.Format("Employee №{0}", i),
-                            Position = (Position)positions.GetValue(random.Next(positions.Length)),
-                            Department = (Department)departments.GetValue(random.Next(departments.Length)),
-                            Age = random.Next(24, 55)
-                        };
-                    }
+                        FullName = "Nepein Alexander Askhtovich",
+                        Email = adminUserEmail,
+                        EmailConfirmed = true,
+                        Position = Position.SeniorBackend,
+                        Department = Department.WebDevelopment,
+                        Age = 24,
+                        RegistrationTime = DateTime.Now,
+                        Gender = Gender.Male
+                    };
+                    await userManager.CreateAsync(newAdminUser, "admin");
+                    await userManager.AddToRoleAsync(newAdminUser, UserRoles.Admin);
+                }
+
+                for (int i = 2; i < 101; i++)
+                {
+
                 }
             }
         }

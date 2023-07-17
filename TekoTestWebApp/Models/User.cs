@@ -11,5 +11,6 @@ namespace TekoTestWebApp.Models
         public Department Department { get; set; }
         public int Age { get; set; }
         public DateTime? RegistrationTime { get; set; }
+        public Gender Gender { get; set; }
     }
 }
