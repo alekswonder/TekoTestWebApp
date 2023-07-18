@@ -2,20 +2,20 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TekoTestWebApp.Data;
+using TekoTestWebApp.Interfaces;
 using TekoTestWebApp.Models;
+using TekoTestWebApp.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IVacationRepository, VacationRepository>();
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AppDbContext>();
-builder.Services.AddMemoryCache(); // Strange Error fixed 
-builder.Services.AddSession();
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 
 var app = builder.Build();
 
@@ -37,7 +37,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

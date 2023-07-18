@@ -1,0 +1,58 @@
+﻿@using TekoTestWebApp.Data.Enum;
+@model User
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<h1>Are you sure you want to delete this club?</h1>
+<form method="post" asp-action="Delete" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Username">Username</label>
+        <input asp-for="Username" class="form-control" placeholder="Enter username">
+        <span asp-validation-for="Username" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Password">Password</label>
+        <input asp-for="Password" class="form-control" placeholder="Enter password">
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="FullName">FullName</label>
+        <input asp-for="FullName" class="form-control" placeholder="Enter Fullname">
+        <span asp-validation-for="FullName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Age">Age</label>
+        <input asp-for="Age" class="form-control" placeholder="Enter Age">
+        <span asp-validation-for="Age" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Position">Position</label>
+        <select asp-for="Position" asp-items="@Html.GetEnumSelectList<Position>()" class="form-control">
+            <option>--Select--</option>
+        </select>
+        <span asp-validation-for="Position" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Department">Department</label>
+        <select asp-for="Department" asp-items="@Html.GetEnumSelectList<Department>()" class="form-control">
+            <option>--Select--</option>
+        </select>
+        <span asp-validation-for="Department" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Gender">Gender</label>
+        <select asp-for="Gender" asp-items="@Html.GetEnumSelectList<Gender>()" class="form-control">
+            <option>--Select--</option>
+        </select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<div class="form-group">
+    <form action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Confirm" class="btn btn-danger float-right mt-3" />
+    </form>
+</div>
