@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using TekoTestWebApp.Interfaces;
 using TekoTestWebApp.Models;
@@ -9,10 +10,12 @@ namespace TekoTestWebApp.Controllers
     public class VacationController : Controller
     {
         private readonly IVacationRepository _vacationRepository;
+        private readonly IVacationService _vacationService;
 
-        public VacationController(IVacationRepository vacationRepository)
+        public VacationController(IVacationRepository vacationRepository, IVacationService vacationService)
         {
             _vacationRepository = vacationRepository;
+            _vacationService = vacationService;
         }
 
         public async Task<IActionResult> Index()
@@ -24,11 +27,31 @@ namespace TekoTestWebApp.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             Vacation vacation = await _vacationRepository.GetByIdAsync(id);
-            return View(vacation);
+            if (vacation == null)
+            {
+                return View("Error");
+            }
+
+            var departmentIntersections = _vacationService.GetDepartmentIntersections(vacation);
+            var womenIntersectons = _vacationService.GetWomenIntersections(vacation);
+            var age50PlusIntersections = _vacationService.GetAge50PlusIntersections(vacation);
+            var nonIntersectingVacations = _vacationService.GetNonIntersectingVacations(vacation);
+
+            var detailVacationViewModel = new DetailVacationViewModel
+            {
+                Vacation = vacation,
+                DepartmentIntersections = departmentIntersections,
+                WomenIntersections = womenIntersectons,
+                Age50PlusIntersections = age50PlusIntersections,
+                NonIntersectingVacations = nonIntersectingVacations
+            };
+
+            return View(detailVacationViewModel);
         }
 
         public IActionResult Create() 
         {
+            ViewBag.UserList = new SelectList(_vacationRepository.GetUsers(), "Id", "FullName");
             return View();
         }
 

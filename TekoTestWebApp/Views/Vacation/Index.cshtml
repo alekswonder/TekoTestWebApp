@@ -4,32 +4,42 @@
 *@
 @{
 }
-
+<h1>Отпуска всех сотрудников</h1>
+<br />
+<br />
+<h3>Перейдя в конкретный отпуск - можно узнать:</h3>
+<ul>
+    <li>Пересечение отпуска с сотрудниками моего отдела. Сотрудники моложе 30 лет</li>
+    <li>Пересечение отпуска с сотрудниками-женщинами не из моего отдела. Возраст сотрудников - старше 30, но моложе 50</li>
+    <li>Пересечение отпуска с сотрудниками из любого отдела. Возраст сотрудников - старше 50 лет</li>
+    <li>Отпуска без пересечения</li>
+</ul>
 <div class="album py-5 bg-light">
     <div class="container">
         <div class="row">
-@*            @foreach(var item in Model)
+            @foreach(var item in Model)
             {
                 <div class="col-md-4">
                     <div class="card mb-4 box-shadow">
                         <div class="card-body">
-                            <p class="card-text">@item.User.FullName</p>
-                            <p class="card-text">@item.StartDateTime</p>
-                            <p class="card-text">@item.EndDateTime</p>
+                            <h4 class="card-text">@item.User.Username</h4>
+                            <h6 class="card-text">ФИО: @item.User.FullName</h6>
+                            <p class="card-text">Начало отпуска: @item.StartDateTime</p>
+                            <p class="card-text">Конец отпуска: @item.EndDateTime</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                   <a type="btn btn-success" asp-controller="User" asp-action="Detail" asp-route-id="@item.Id"
-                                     class="btn btn-sm btn-outline-secondary">View</a>
-                                    <a type="button" asp-controller="User" asp-action="Edit" asp-route-id="@item.Id"
-                                      class="btn btn-sm btn-outline-secondary">Edit</a>
-                                    <a type="button" asp-controller="User" asp-action="Delete" asp-route-id="@item.Id"
-                                       class="btn btn-sm btn-outline-secondary">Delete</a>
+                                    <a type="btn btn-success" asp-controller="Vacation" asp-action="Detail" asp-route-id="@item.Id"
+                                     class="btn btn-sm btn-outline-secondary">Показать</a>
+                                    <a type="button" asp-controller="Vacation" asp-action="Edit" asp-route-id="@item.Id"
+                                      class="btn btn-sm btn-outline-secondary">Изменить</a>
+                                    <a type="button" asp-controller="Vacation" asp-action="Delete" asp-route-id="@item.Id"
+                                       class="btn btn-sm btn-outline-secondary">Удалить</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            }*@
+            }
         </div>
     </div>
 </div>

@@ -1,59 +1,156 @@
-﻿@model User
+﻿@using TekoTestWebApp.ViewModels
+@model DetailVacationViewModel
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
-<!-- Page Content
 <div class="container">
 
     <h1 class="my-4">
-        Page Heading
-        <small>Secondary Text</small>
+        График отпуска для:
     </h1>
 
     <div class="row">
 
         <div class="col-md-4">
-            <h3 class="my-3">Model.FullName</h3>
-            <p>Model.Username</p>
-            <p>Model.Age</p>
-            <p>Model.Position</p>
-            <p>Model.Department</p>
-            <p>Model.Gender</p>
-            <h3 class="my-3">Location</h3>
+            <h3 class="my-3">@Model.Vacation.User.FullName</h3>
+            <p>Отдел: @Model.Vacation.User.Department</p>
+            <p>Должность: @Model.Vacation.User.Position</p>
+            <p>Дата начала: @Model.Vacation.StartDateTime</p>
+            <p>Дата конца: @Model.Vacation.EndDateTime</p>
         </div>
 
     </div>
-    <h3 class="my-4">Related Projects</h3>
-
-    <div class="row">
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
+    <h3>Коллеги из такого же отдела, которые сейчас отдыхают:</h3>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model.DepartmentIntersections)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-body">
+                                <h4 class="card-text">@item.User.Username</h4>
+                                <h6 class="card-text">ФИО: @item.User.FullName</h6>
+                                <p class="card-text">Начало отпуска: @item.StartDateTime</p>
+                                <p class="card-text">Конец отпуска: @item.EndDateTime</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a type="btn btn-success" asp-controller="User" asp-action="Detail" asp-route-id="@item.Id"
+                                            class="btn btn-sm btn-outline-secondary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
+    </div>
+    <h3>Девушки из других отделов в отпуске:</h3>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model.WomenIntersections)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-body">
+                                <h4 class="card-text">@item.User.Username</h4>
+                                <h6 class="card-text">ФИО: @item.User.FullName</h6>
+                                <p class="card-text">Начало отпуска: @item.StartDateTime</p>
+                                <p class="card-text">Конец отпуска: @item.EndDateTime</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a type="btn btn-success" asp-controller="User" asp-action="Detail" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-secondary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
+    </div>
+    <h3>Коллеги от 50 лет в отпуске:</h3>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model.Age50PlusIntersections)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-body">
+                                <h4 class="card-text">@item.User.Username</h4>
+                                <h6 class="card-text">ФИО: @item.User.FullName</h6>
+                                <p class="card-text">Начало отпуска: @item.StartDateTime</p>
+                                <p class="card-text">Конец отпуска: @item.EndDateTime</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a type="btn btn-success" asp-controller="User" asp-action="Detail" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-secondary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-
-        <div class="col-md-3 col-sm-6 mb-4">
-            <a href="#">
-                <img class="img-fluid" src="https://via.placeholder.com/500x300" alt="">
-            </a>
+    </div>
+    <h3>Непересекающиеся отпуска коллег</h3>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in Model.NonIntersectingVacations)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-body">
+                                <h4 class="card-text">@item.User.Username</h4>
+                                <h6 class="card-text">ФИО: @item.User.FullName</h6>
+                                <p class="card-text">Начало отпуска: @item.StartDateTime</p>
+                                <p class="card-text">Конец отпуска: @item.EndDateTime</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a type="btn btn-success" asp-controller="User" asp-action="Detail" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-secondary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
-
+    </div>
+    <h3>Непересекающиеся отпуска коллег</h3>
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                @foreach(var item in Model.NonIntersectingVacations)
+                {
+                    <div class="col-md-4">
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-body">
+                                <h4 class="card-text">@item.User.Username</h4>
+                                <h6 class="card-text">ФИО: @item.User.FullName</h6>
+                                <p class="card-text">Начало отпуска: @item.StartDateTime</p>
+                                <p class="card-text">Конец отпуска: @item.EndDateTime</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <a type="btn btn-success" asp-controller="User" asp-action="Detail" asp-route-id="@item.Id"
+                                            class="btn btn-sm btn-outline-secondary">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
     </div>
 
 </div>
- -->

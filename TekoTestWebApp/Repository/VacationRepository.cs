@@ -27,7 +27,7 @@ namespace TekoTestWebApp.Repository
 
         public async Task<IEnumerable<Vacation>> GetAllAsync()
         {
-            return await _context.Vacation.ToListAsync();
+            return await _context.Vacation.Include(v => v.User).ToListAsync();
         }
 
         public async Task<IEnumerable<Vacation>> GetByFullNameAsync(string fullname)
@@ -37,17 +37,22 @@ namespace TekoTestWebApp.Repository
 
         public async Task<Vacation> GetByIdAsync(int id)
         {
-            return await _context.Vacation.Include(v => v.Id == id).FirstOrDefaultAsync();
+            return await _context.Vacation.Include(v => v.User).FirstOrDefaultAsync(v => v.Id == id);
         }
 
         public async Task<Vacation> GetByIdNoTracking(int id)
         {
-            return await _context.Vacation.Include(v => v.Id == id).AsNoTracking().FirstOrDefaultAsync();
+            return await _context.Vacation.Include(v => v.User).AsNoTracking().FirstOrDefaultAsync(v => v.Id == id);
         }
 
         public async Task<IEnumerable<Vacation>> GetByUsernameAsync(string username)
         {
             return await _context.Vacation.Where(v => v.User.Username.Contains(username)).ToListAsync();
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            return _context.User.ToList();
         }
 
         public bool Save()

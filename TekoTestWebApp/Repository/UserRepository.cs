@@ -32,12 +32,12 @@ namespace TekoTestWebApp.Repository
 
         public async Task<User> GetByIdAsync(int id)
         {
-            return await _context.User.Include(u => u.Id == id).FirstOrDefaultAsync();
+            return await _context.User.FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public async Task<User> GetByIdNoTracking(int id)
         {
-            return await _context.User.Include(u => u.Id == id).AsNoTracking().FirstOrDefaultAsync();
+            return await _context.User.AsNoTracking().FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public bool Save()

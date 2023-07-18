@@ -2,18 +2,21 @@
     ViewData["Title"] = "Home Page";
 }
 
-<section class="jumbotron text-center">
-    <div class="container">
-        <h1 class="jumbotron-heading">Users</h1>
-        <p class="lead text-muted">List of Employees</p>
-        <p>
-            <a href="#" class="btn btn-primary my-2">Main call to action</a>
-            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-        </p>
-    </div>
-</section>
-<div class="album py-5 bg-light">
-    <div class="container">
-
-    </div>
-</div>
+<h1>Тестовое задание для Теко</h1>
+<p>Web приложение на ASP.net MVC на языке C#, которое:</p>
+<ol>
+    <li>Генерирует случайным образом "Сотрудников компании" и "График отпусков", используя скрипт ./Data/Seed.cs, который заполняет базу данных случайными значениями</li>
+    <li>Реализует CRUD для моделей "Пользователь" и "Отпуск".</li>
+    <a asp-controller="User" asp-action="Create" class="btn btn-primary my-2">Создать пользователя</a>
+    <a asp-controller="Vacation" asp-action="Create" class="btn btn-secondary my-2">Создать отпуск</a>
+    <li>
+        Вывести информацию о пересечениях отпусков по критериям:
+    </li>
+    <ul>
+        <li>Пересечение отпуска с сотрудниками моего отдела. Сотрудники моложе 30 лет.</li>
+        <li>Пересечение отпуска с сотрудниками-женщинами не из моего отдела. Возраст сотрудников - старше 30, но моложе 50.</li>
+        <li>Пересечение отпуска с сотрудниками из любого отдела. Возраст сотрудников - старше 50 лет.</li>
+        <li>Отпуска без пересечения.</li>
+    </ul>
+    <li>Реализация проекта выложена на <a href="https://github.com/alekswonder/TekoTestWebApp">GitHub</a>.</li>
+</ol>

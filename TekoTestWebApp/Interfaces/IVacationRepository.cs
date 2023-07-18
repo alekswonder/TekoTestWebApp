@@ -9,6 +9,7 @@ namespace TekoTestWebApp.Interfaces
         Task<IEnumerable<Vacation>> GetByUsernameAsync(string username);
         Task<IEnumerable<Vacation>> GetByFullNameAsync(string fullname);
         Task<Vacation> GetByIdNoTracking(int id);
+        public IEnumerable<User> GetUsers();
         bool Add(Vacation vacation);
         bool Update(Vacation vacation);
         bool Delete(Vacation vacation);
