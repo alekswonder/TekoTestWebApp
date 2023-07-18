@@ -99,13 +99,21 @@ namespace TekoTestWebApp.Controllers
             return View(userViewModel);
         }
 
+        public async Task<IActionResult> Delete(int id)
+        {
+            return View();
+        }
+
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var userDetails = await _userRepository.GetByIdAsync(id);
-            if (userDetails != null) return View(userDetails);
-            _userRepository.Delete(userDetails);
-            return RedirectToAction("Index");
+            if (userDetails != null) 
+            {
+                _userRepository.Delete(userDetails);
+                return RedirectToAction("Index");
+            }
+            return NotFound();
         }
     }
 }
