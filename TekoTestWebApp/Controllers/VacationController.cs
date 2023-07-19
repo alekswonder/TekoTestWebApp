@@ -67,6 +67,7 @@ namespace TekoTestWebApp.Controllers
                 if (length > 14)
                 {
                     ModelState.AddModelError("", "Length of vacation is more than 14 days");
+                    ViewBag.UserList = new SelectList(_vacationRepository.GetUsers(), "Id", "FullName");
                     return View("Error", vacationViewModel);
                 }
 
@@ -74,11 +75,12 @@ namespace TekoTestWebApp.Controllers
                 {
                     StartDateTime = vacationViewModel.StartDateTime,
                     EndDateTime = vacationViewModel.EndDateTime,
-                    User = vacationViewModel.User
+                    User = _vacationRepository.GetUsers().FirstOrDefault(u => u.Id == vacationViewModel.User)
                 };
                 _vacationRepository.Add(vacation);
                 return RedirectToAction("Index");
             }
+            ViewBag.UserList = new SelectList(_vacationRepository.GetUsers(), "Id", "FullName");
             return View(vacationViewModel);
         }
         public async Task<IActionResult> Edit(int id)
