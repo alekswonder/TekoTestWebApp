@@ -91,7 +91,7 @@ namespace TekoTestWebApp.Controllers
             {
                 StartDateTime = vacation.StartDateTime,
                 EndDateTime = vacation.EndDateTime,
-                User = vacation.User
+                User = vacation.User.Id
             };
             return View(vacationViewModel);
         }
@@ -123,13 +123,19 @@ namespace TekoTestWebApp.Controllers
                     Id = id,
                     StartDateTime = vacationViewModel.StartDateTime,
                     EndDateTime = vacationViewModel.EndDateTime,
-                    User = vacationViewModel.User
+                    User = currentVacation.User
                 };
                 _vacationRepository.Update(tempVacation);
                 return RedirectToAction("Index");
             }
             return View(vacationViewModel);
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            return View();
+        }
+
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteVacation(int id)
         {

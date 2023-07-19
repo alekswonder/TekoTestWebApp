@@ -1,14 +1,11 @@
 ﻿@using TekoTestWebApp.Data.Enum;
 @using TekoTestWebApp.ViewModels;
 @model EditVacationViewModel
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
 }
 <h1>Изменить оптуск</h1>
 <form method="post" asp-action="Edit" enctype="multipart/form-data">
-    <input type="hidden" value="AddressId" id="AddressId" />
+    <input type="hidden" value="User.Id" id="User.Id" />
     <div class="form-group">
         <label asp-for="StartDateTime">Дата начала:</label>
         <input asp-for="StartDateTime" class="form-control" />
