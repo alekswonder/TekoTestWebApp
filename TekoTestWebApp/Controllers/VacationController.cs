@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using TekoTestWebApp.Interfaces;
 using TekoTestWebApp.Models;
+using TekoTestWebApp.Repository;
 using TekoTestWebApp.ViewModels;
 
 namespace TekoTestWebApp.Controllers
@@ -139,10 +140,13 @@ namespace TekoTestWebApp.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteVacation(int id)
         {
-            var vacationDetail = await _vacationRepository.GetByIdAsync(id);
-            if (vacationDetail != null) return View(vacationDetail);
-            _vacationRepository.Delete(vacationDetail);
-            return RedirectToAction("Index");
+            var vacationDetails = await _vacationRepository.GetByIdAsync(id);
+            if (vacationDetails != null)
+            {
+                _vacationRepository.Delete(vacationDetails);
+                return RedirectToAction("Index");
+            }
+            return NotFound();
         }
     }
 }
